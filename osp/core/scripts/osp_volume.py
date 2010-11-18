@@ -28,6 +28,6 @@ print 'export OSP_VOL_' + volname + '=' + volpath
 print 'export OSP_VOL_NAME=' + volname
 
 if 'OSP_VOLS' in os.environ:
-    print 'export OSP_VOLS=$OSP_VOLS:' + volpath
+    print 'export OSP_VOLS=' + os.getenv('OSP_VOLS') + ':' + volpath
 else:
     print 'export OSP_VOLS=' + volpath
