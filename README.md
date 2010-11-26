@@ -24,6 +24,8 @@ Enter the Open Source Pipeline.
 + Rely on [Shotgun](http://www.shotgunsoftware.com/) for the production database.
 
 ##Components in progress:
++ osp_env.sh : set studio-wide command-line environment.
++ job.sh : set 
 + A tool for managing command-line environments in VFX studios. osp_env [show] [seq] [shot]
 + Daily system
 
