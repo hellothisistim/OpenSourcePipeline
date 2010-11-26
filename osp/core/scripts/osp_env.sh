@@ -2,12 +2,12 @@
 #
 # Set up the default OSP enviroment. A nifty part of Open Source Pipeline.
 
-echo "Loading OSP environment."
+echo "Loading OSP core environment."
 
 #export OSP_VERBOSE=True
 
 ## Stop if OSP_HOME is not set.
-#if [ -z "${OpenSP_HOME}" ]
+#if [ -z "${OSP_HOME}" ]
 #then 
 #    echo "OSP_HOME not set. Cannot find OSP scripts."
 #    exit 1

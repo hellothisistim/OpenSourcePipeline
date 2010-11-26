@@ -17,7 +17,3 @@ alias nuke6=Nuke6.1v2
 
 # Studio default
 alias nuke=nuke6
-
-
-echo "OSP envars:"
-set | grep ^OSP
