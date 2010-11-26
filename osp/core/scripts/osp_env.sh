@@ -4,14 +4,23 @@
 
 echo "Loading OSP environment."
 
+#export OSP_VERBOSE=True
+
+## Stop if OSP_HOME is not set.
+#if [ -z "${OpenSP_HOME}" ]
+#then 
+#    echo "OSP_HOME not set. Cannot find OSP scripts."
+#    exit 1
+#fi
+
 # Find OSP volumes
 unset OSP_VOLS
 . $OSP_HOME/core/scripts/osp_volumes.sh
 
 # Setup paths
 export PATH=$PATH:$OSP_HOME/local/scripts:$OSP_HOME/core/scripts
-export PYTHONPATH=$PYTHONPATH:$OSP_HOME/core/scripts
-export NUKE_PATH=$NUKE_PATH:$OSP_HOME/core/nuke:$OSP_HOME/local/nuke
+export PYTHONPATH=$PYTHONPATH:$OSP_HOME/local/scripts:$OSP_HOME/core/scripts
+export NUKE_PATH=$NUKE_PATH:$OSP_HOME/local/nuke:$OSP_HOME/core/nuke
 
 # Remove old show-specific variables
 unset OSP_SHOW
@@ -22,16 +31,9 @@ unset OSP_SHOT
 # Set show variables if requested
 if [ ${#1} != 0 ]
 then
-    echo "Show: "$1
-    for p in $( echo $OSP_VOLS|tr : " " ); do
-        echo "OSP looking for show root in: "$p
-        if [ -e $p/show ]
-        then 
-            for s in $( ls $p/show ) ]; do
-                echo "foundit"
-            done
-        fi
-    done
+    echo "Show code: "$1
+    export OSP_SHOW_CODE=$1
+    $OSP_HOME/core/scripts/osp_shows.sh $OSP_SHOW_CODE
 fi
 
 # Set sequence variable if requested
@@ -51,3 +53,4 @@ if [ -e $OSP_HOME/local/scripts/osp_local_env.sh ]
 then 
     . $OSP_HOME/local/scripts/osp_local_env.sh
 fi
+

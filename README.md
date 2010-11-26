@@ -22,3 +22,12 @@ Enter the Open Source Pipeline.
 ##Approach: 
 + Use the idea from Unix of simple, single-function tools, piped together to create something useful and complex.
 + Rely on [Shotgun](http://www.shotgunsoftware.com/) for the production database.
+
+##Components in progress:
++ A tool for managing command-line environments in VFX studios. osp_env [show] [seq] [shot]
++ Daily system
+
+##Future components:
++ Site/Show/Shot magic for Nuke. Knobs in root which get evaluated + updated, all pathnames in script get expression-linked to the root knobs for single-point "correctability."
++ Checking  tool for logging sources in SG.
++ Log all sources in a Nuke script into Shotgun as an element and link them to the SG Version.

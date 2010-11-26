@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Set up the local studio defaults. This is sourced from osp/scripts/osp_env.sh
-echo "OSP loading local studio environment."
+echo "Loading OSP local studio environment."
 
 ##
 ## Tool shortcuts
@@ -17,3 +17,7 @@ alias nuke6=Nuke6.1v2
 
 # Studio default
 alias nuke=nuke6
+
+
+echo "OSP envars:"
+set | grep ^OSP

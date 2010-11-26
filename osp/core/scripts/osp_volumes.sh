@@ -13,7 +13,7 @@
 # the same environment variable across multiple systems or platforms.
 #
 
-# Should probably check OSP_MODE to see if we should be chatty like this or not.
+# Should probably check OSP_VERBOSE to see if we should be chatty like this or not.
 # It might get annoying to the user.
 echo -n "OSP volumes:"
 
