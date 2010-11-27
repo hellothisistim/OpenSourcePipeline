@@ -28,6 +28,15 @@ if [ ${#1} != 0 ]; then
     export OSP_SHOW_CODE=$1
 fi
 
+if [ ${#2} != 0 ]; then
+    export OSP_SEQ_NAME=$2
+fi
+
+if [ ${#3} != 0 ]; then
+    export OSP_SHOT_NAME=$3
+fi
+
+# Go find all the shows and see if one matches.
 for p in $( echo $OSP_VOLS|tr : " " ); do
     #echo "OSP looking for show root in: "$p
     if [ -e $p/show ]
@@ -43,10 +52,19 @@ for p in $( echo $OSP_VOLS|tr : " " ); do
     fi
 done
 
+# If the paths requested above haven't been set, remove the requesting envar.
 if [ -z "${OSP_SHOW}" ]; then
-    #echo Show: $OSP_SHOW
     unset OSP_SHOW_CODE
 fi
+
+if [ -z "${OSP_SEQ}" ]; then
+    unset OSP_SEQ_NAME
+fi
+
+if [ -z "${OSP_SHOT}" ]; then
+    unset OSP_SHOT_NAME
+fi
+
 
 echo __
 echo "OSP envars:"

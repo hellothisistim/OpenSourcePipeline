@@ -21,7 +21,7 @@ import sys
 showcode = "SHOWCODE"
 showname = "ShowName"
 
-if __name__ == '__main__':
+def main():    
     requested_code = os.getenv('OSP_SHOW_CODE')
     
     # If OSP_SHOW_CODE is not set, echo the show's name and code
@@ -29,7 +29,7 @@ if __name__ == '__main__':
         print 'echo ' + showcode + " : " + showname
         #sys.exit()
     
-    # If showcode matches the requested code in sys.argv[1], export the variables
+    # If showcode matches the requested code, export the variables
     # for this show.
     elif requested_code == showcode:
         # Find the show root. It's up one directory level.
@@ -38,5 +38,21 @@ if __name__ == '__main__':
         
         print 'export OSP_SHOW=' + showpath
         print 'export OSP_SHOW_NAME=' + showname
-        print 'export NUKE_PATH=$NUKE_PATH:$OSP_SHOW_DIR'
+        print 'export NUKE_PATH=' + showpath + ':' + os.getenv('NUKE_PATH')
         
+        # Set sequence path if requested and it exists on the filesystem.
+        seq_name = os.getenv('OSP_SEQ_NAME')
+        if seq_name is not None:
+            seq_dir = os.path.join(showpath, seq_name)
+            if os.path.exists(seq_dir):
+                print 'export OSP_SEQ=' + seq_dir
+
+            # Set shot path if requested and it exists on the filesystem.
+            shot_name = os.getenv('OSP_SHOT_NAME')
+            if shot_name is not None:
+                shot_dir = os.path.join(showpath, seq_name, seq_name + shot_name)
+                if os.path.exists(shot_dir):
+                    print 'export OSP_SHOT=' + shot_dir
+          
+if __name__ == '__main__':
+    main()          
