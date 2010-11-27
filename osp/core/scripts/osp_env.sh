@@ -23,6 +23,7 @@ export PYTHONPATH=$PYTHONPATH:$OSP_HOME/local/scripts:$OSP_HOME/core/scripts
 export NUKE_PATH=$NUKE_PATH:$OSP_HOME/local/nuke:$OSP_HOME/core/nuke
 
 alias oenv="set|grep ^OSP"
+alias show=". osp_shows.sh"
 
 ## Remove old show-specific variables
 #unset OSP_SHOW
