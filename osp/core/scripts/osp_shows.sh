@@ -24,6 +24,7 @@ unset OSP_SEQ_NAME
 unset OSP_SHOT
 unset OSP_SHOT_NAME
 
+# Set envars for as many components as were requested.
 if [ ${#1} != 0 ]; then
     export OSP_SHOW_CODE=$1
 fi
@@ -38,15 +39,12 @@ fi
 
 # Go find all the shows and see if one matches.
 for p in $( echo $OSP_VOLS|tr : " " ); do
-    #echo "OSP looking for show root in: "$p
     if [ -e $p/show ]
     then 
         for s in $( ls $p/show ); do
-            #echo "Found show: "$s
             if [ -e $p/show/$s/_osp/osp_show.py ]
             then
                 `python $p/show/$s/_osp/osp_show.py`
-                #echo -n " "$OSP_SHOW_NAME
             fi
         done
     fi
@@ -65,7 +63,7 @@ if [ -z "${OSP_SHOT}" ]; then
     unset OSP_SHOT_NAME
 fi
 
-
+# Show all the envars that were set. For debugging only.
 echo __
 echo "OSP envars:"
 set|grep ^OSP
