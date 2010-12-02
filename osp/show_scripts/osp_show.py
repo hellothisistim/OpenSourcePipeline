@@ -21,6 +21,45 @@ import sys
 showcode = "SHOWCODE"
 showname = "ShowName"
 
+
+##--------------------------------------------------------------
+## METHODS
+##--------------------------------------------------------------
+
+def envarAddToPath(envar, path):
+    """
+    If envar exists, and path is not aleady in it, add path to the beginning and return the whole lot. If envar does not yet exist, return path. If path is already in envar, do nothing. Does not verify that path is valid.
+    """
+    
+    val = os.getenv(envar)
+    if val is None:
+        return path
+    p = val.split(':')
+    if path in p:
+        return val
+    else:
+        return ':'.join([path, val])
+
+
+def envarAppendToPath(envar, path):
+    """
+    If envar exists, and path is not aleady in it, add path to the end and return the whole lot. If envar does not yet exist, return path. Does not verify that path is valid.
+    """
+    
+    val = os.getenv(envar)
+    if val is None:
+        return path
+    p = val.split(':')
+    if path in p:
+        return val
+    else:
+        return ':'.join([val, path])
+
+
+##--------------------------------------------------------------
+## MAIN
+##--------------------------------------------------------------
+
 def main():    
     requested_code = os.getenv('OSP_SHOW_CODE')
     
@@ -35,10 +74,12 @@ def main():
         # Find the show root. It's up one directory level.
         thispath = os.path.dirname(os.path.realpath(__file__))
         showpath = os.path.split(thispath)[0]
+        show_osp = os.path.join(showpath, '_osp')
         
         print 'export OSP_SHOW=' + showpath
         print 'export OSP_SHOW_NAME=' + showname
-        print 'export NUKE_PATH=' + showpath + ':' + os.getenv('NUKE_PATH')
+        print 'export NUKE_PATH=' + envarAddToPath('NUKE_PATH', os.path.join(show_osp, 'nuke'))
+        print 'export PYTHONPATH=' + envarAppendToPath('PYTHONPATH', show_osp)
         
         # Set sequence path if requested and it exists on the filesystem.
         seq_name = os.getenv('OSP_SEQ_NAME')
