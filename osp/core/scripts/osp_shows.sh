@@ -18,6 +18,7 @@
 
 # Remove old show/seq/shot-specific variables
 unset OSP_SHOW
+unset OSP_SHOW_CODE
 unset OSP_SHOW_NAME
 unset OSP_SEQ
 unset OSP_SEQ_NAME
