@@ -33,7 +33,10 @@ Enter the Open Source Pipeline.
 + Checking  tool for logging sources in SG.
 + Log all sources in a Nuke script into Shotgun as an element and link them to the SG Version.
 
+##Next steps:
++ "osp init showpath" -- to copy the base show scripts into a new show directory.
 
 #Installing
 
 The Open Source Pipeline will need to have a home on a central location in a facility, something that's available to all the machines in the pipeline. Put the "osp" directory in this location and add the OSP magic to your /etc/bashrc or user-level bashrc file. (I should probably build a script to do this.)
+
