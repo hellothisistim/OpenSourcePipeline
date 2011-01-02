@@ -24,19 +24,17 @@ Enter the Open Source Pipeline.
 + Rely on [Shotgun](http://www.shotgunsoftware.com/) for the production database.
 
 ##Components in progress:
-+ osp_env.sh : Sets up the studio-wide command-line environment.
++ ospenv : A studio-wide command-line environment and framework for job-specific customizations. This is the base framework that OSP will run on. 
 + show.sh : Allows the user to further set up the environment for a show, sequence and shot.
-+ Daily system
 
 ##Future components:
++ Daily system
 + Site/Show/Shot magic for Nuke. Knobs in root which get evaluated + updated, all pathnames in script get expression-linked to the root knobs for single-point "correctability."
 + Checking  tool for logging sources in SG.
 + Log all sources in a Nuke script into Shotgun as an element and link them to the SG Version.
-
-##Next steps:
-+ "osp init showpath" -- to copy the base show scripts into a new show directory.
++ A "package up these files and send them to a vendor" tool.
 
 #Installing
 
-The Open Source Pipeline will need to have a home on a central location in a facility, something that's available to all the machines in the pipeline. Put the "osp" directory in this location and add the OSP magic to your /etc/bashrc or user-level bashrc file. (I should probably build a script to do this.)
+The Open Source Pipeline will need to have a home on a central location in a facility, something that's available to all the machines in the pipeline. Put the "osp" directory in this location and add the OSP magic to your /etc/bashrc or user-level .bashrc file. (I should probably build a script to do this.)
 
