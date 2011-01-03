@@ -15,7 +15,7 @@ echo "Loading OSP core environment."
 
 # Find OSP volumes
 unset OSP_VOLS
-. $OSP_HOME/core/scripts/osp_volumes.sh
+. $OSP_HOME/core/ospenv/osp_volumes.sh
 
 # Setup paths
 export PATH=$PATH:$OSP_HOME/local/scripts:$OSP_HOME/core/scripts
