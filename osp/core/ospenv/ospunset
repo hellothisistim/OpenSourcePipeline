@@ -1,0 +1,11 @@
+#! /usr/bin/python
+#
+# ospunset
+#
+# Unset job-specific environment variables.
+#
+
+import oecore
+
+for envar in ospjob.envars:
+    print "unset", envar
