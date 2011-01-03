@@ -1,0 +1,39 @@
+#! /bin/bash
+#
+# ospinstall
+#
+# Adds a code block to /etc/bashrc that tries to load the OSP environement.
+# Must be run as root.
+#
+
+TARGET=/etc/bashrc
+TEMPFILE=$TARGET.temp
+
+if [ ! -w $TARGET ]
+then
+    echo "You do not have permission to write to $TARGET."
+    exit 1
+fi
+
+# Backup the existing bashrc.
+BACKUP=$TARGET.backup`date "+%Y_%m_%d_%H%M"`
+echo "Backing up existing $TARGET file to $BACKUP."
+cp $TARGET $BACKUP
+
+# Build new bashrc file as temp.
+echo "Building new bashrc file."
+# Start with existing bashrc
+cat /etc/bashrc >> $TEMPFILE
+# Add OSP magic block
+echo >> $TEMPFILE
+echo "## OSP magic block starts." >> $TEMPFILE
+echo "export OSP_HOME=`pwd`/../.." >> $TEMPFILE
+echo "if [ -e \$OSP_HOME ]; then" >> $TEMPFILE
+echo "    . \$OSP_HOME/core/ospenv/osp_env.sh " >> $TEMPFILE
+echo "else" >> $TEMPFILE 
+echo "    unset OSP_HOME" >> $TEMPFILE
+echo "fi" >> $TEMPFILE
+echo "## OSP magic block ends." >> $TEMPFILE
+
+# Move the temp file to bashrc.
+mv -f $TEMPFILE $TARGET
