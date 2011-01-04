@@ -6,8 +6,39 @@
 #
 # 
 
+# From Python
+import imp
+import os
+import sys
+# From ospenv
+import osp
 
+# Globals
+
+
+
+
+print "volumes", osp.volumes()
+print "job dirs", osp.job_dirs()
+print "jobs", osp.jobs()
+
+for job in osp.jobs():
+    config = imp.load_source('foo', osp.job_config_file(job))
+    if config.jobcode == sys.argv[1]:
+        print "export OSP_JOB_CODE=" + config.jobcode
+
+"""
+for vol in osp_vols.split(':'):
+    jobs_path = os.path.join(vol, osp.job_folder_name)
+    if os.path.exists(jobs_path):
+        
+        print jobs_path
+        # Get all the job folders from the jobs directory.
+        #config_file = os.path.join(jobs_path
+        # Load up it's config file
+        #job_conf = imp.load_source()
+        # And see if it's the one we're looking for.
+        pass
+"""
 
 pass
-
-
