@@ -17,13 +17,17 @@ fi
 unset OSP_VOLS
 . $OSP_HOME/core/ospenv/osp_volumes.sh
 
-# Setup paths
-export PATH=$PATH:$OSP_HOME/local/scripts:$OSP_HOME/core/scripts
-export PYTHONPATH=$PYTHONPATH:$OSP_HOME/local/scripts:$OSP_HOME/core/scripts
+# Set paths
+export PATH=$PATH:$OSP_HOME/local/ospenv:$OSP_HOME/core/ospenv
+export PYTHONPATH=$PYTHONPATH:$OSP_HOME/local/ospenv:$OSP_HOME/core/ospenv
 export NUKE_PATH=$NUKE_PATH:$OSP_HOME/local/nuke:$OSP_HOME/core/nuke
 
 alias oenv="set|grep ^OSP"
+
+# Set aliases for ospenv tools
+alias ospunset=`ospunset`
 alias ospreload=". $OSP_HOME/core/ospenv/osp_env.sh"
+function ospjob() { $OSP_HOME/core/ospenv/ospjob "$@" ;}
 
 # Source the local studio environment if it exists.
 if [ -e $OSP_HOME/local/scripts/osp_local_env.sh ]

@@ -5,7 +5,7 @@
 # Unset job-specific environment variables.
 #
 
-import oecore
+import osp
 
-for envar in ospjob.envars:
+for envar in osp.job_envars:
     print "unset", envar
