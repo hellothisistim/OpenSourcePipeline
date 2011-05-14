@@ -22,8 +22,6 @@ verbose = False
 # non-interactive shells as well for interactive ones.
 # http://www.joshstaiger.org/archives/2005/07/bash_profile_vs.html
 target='/etc/bashrc'
-# for testing purposes
-target = '/Users/puffy/foo_bashrc'
 
 delimiter = '## OSP configuration block'
 start = delimiter + ' start'
@@ -33,7 +31,7 @@ end = delimiter + ' end'
 ospConfigBlock = start + """
 export OSP_HOME=%s
 if [ -e \$OSP_HOME ]; then
-    . \$OSP_HOME/core/ospenv/osp-env.sh "
+    . \$OSP_HOME/core/ospenv/osp-env.sh
 else
     unset OSP_HOME
 fi
