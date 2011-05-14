@@ -1,39 +1,133 @@
-#! /bin/bash
+#! /usr/bin/python
 #
 # ospinstall
 #
-# Adds a code block to /etc/bashrc that tries to load the OSP environement.
-# Must be run as root.
-#
 
-TARGET=/etc/bashrc
-TEMPFILE=$TARGET.temp
+# From Python
+import datetime
+import os
+import shutil
+import sys
+from optparse import OptionParser
 
-if [ ! -w $TARGET ]
-then
-    echo "You do not have permission to write to $TARGET."
-    exit 1
+
+## -----------------------------------------------------------------------------
+## GLOBALS
+## -----------------------------------------------------------------------------
+
+verbose = False
+
+# OSP puts it's one "hook" into the computer's configuration in /etc/bashrc. 
+# The bashrc files is used so that the OSP environment will be loaded for 
+# non-interactive shells as well for interactive ones.
+# http://www.joshstaiger.org/archives/2005/07/bash_profile_vs.html
+target='/etc/bashrc'
+# for testing purposes
+target = '/Users/puffy/foo_bashrc'
+
+delimiter = '## OSP configuration block'
+start = delimiter + ' start'
+end = delimiter + ' end'
+
+# This is the block of code that gets appended to the target file.
+ospConfigBlock = start + """
+export OSP_HOME=%s
+if [ -e \$OSP_HOME ]; then
+    . \$OSP_HOME/core/ospenv/osp-env.sh "
+else
+    unset OSP_HOME
 fi
+""" + end + '\n'
 
-# Backup the existing bashrc.
-BACKUP=$TARGET.backup`date "+%Y_%m_%d_%H%M"`
-echo "Backing up existing $TARGET file to $BACKUP."
-cp $TARGET $BACKUP
+usage = """ospinstall [options]
 
-# Build new bashrc file as temp.
-echo "Building new bashrc file."
-# Start with existing bashrc
-cat /etc/bashrc >> $TEMPFILE
-# Add OSP magic block
-echo >> $TEMPFILE
-echo "## OSP magic block starts." >> $TEMPFILE
-echo "export OSP_HOME=`pwd`/../.." >> $TEMPFILE
-echo "if [ -e \$OSP_HOME ]; then" >> $TEMPFILE
-echo "    . \$OSP_HOME/core/ospenv/osp_env.sh " >> $TEMPFILE
-echo "else" >> $TEMPFILE 
-echo "    unset OSP_HOME" >> $TEMPFILE
-echo "fi" >> $TEMPFILE
-echo "## OSP magic block ends." >> $TEMPFILE
+Appends a block of code to %s so that the OSP core environment will load on shell startup. Must be run with root priveleges.""" % target
 
-# Move the temp file to bashrc.
-mv -f $TEMPFILE $TARGET
+
+## -----------------------------------------------------------------------------
+## METHODS
+## -----------------------------------------------------------------------------
+
+def tell( message ):
+    """If verbose mode is on, print the message to stdout."""
+    
+    if verbose:
+        print message
+
+def setup():
+    """Check that we do in fact have write permission for the target file. Then make a backup of that file, appending "backup" and the date to the filename."""
+
+    # Can we write to the target file?
+    if not os.access(os.path.dirname(target), os.W_OK):
+        sys.exit('You do not have permission to write to ' + target + '.')
+    # Back-up the existing file.
+    backupFile = target + '-backup-' + datetime.datetime.now().strftime('%Y-%m-%d-%H%M')
+    tell ('Backing up ' + target + ' to ' + backupFile)
+    shutil.copy(target, backupFile)
+
+def clean(source):
+    """Filter any existing OSP configuration code blocks from the source."""
+ 
+    while start in source and end in source:
+        a = source.partition(start)
+        b = a[2].partition(end)
+        # Recombine the clean head and the potentially un-clean tail and get 
+        # ready to maybe do the loop again.
+        source = a[0].rstrip() + '\n' + b[2]
+    tell('returning source: ' + source)
+    return source    
+
+def install():
+    """Remove any existing OSP configuration code blocks and append a new one to the target file."""
+    
+    tell('Starting installation.')
+    setup()
+    targetFile = open(target, 'r')
+    contents = targetFile.read()
+    tell('Appending OSP configuration code to ' + target)
+    tell(target + ' before changes:\n' + contents)
+    tempFile = open(target + '.temp', 'w')
+    # Filter the existing target file and append the OSP stuff.
+    tempFile.write(clean(contents))
+    tempFile.write(ospConfigBlock)
+    tempFile.close()
+    targetFile.close()
+    shutil.move(tempFile.name, target)
+    targetFile = open(target, 'r')
+    tell('Installation complete.')
+    tell( target + ' after changes:\n' + targetFile.read() )
+    
+def uninstall():
+    """Remove any OSP configuration code blocks from the target file."""
+
+    tell('Starting removal.')
+    setup()
+    targetFile = open(target, 'r')
+    contents = targetFile.read()
+    tell('Removing OSP configuration code from ' + target)
+    tell(target + ' before changes:\n' + contents)
+    tempFile = open(target + '.temp', 'w')
+    # Filter the existing target file.
+    tempFile.write(clean(contents))
+    tempFile.close()
+    targetFile.close()
+    shutil.move(tempFile.name, target)
+    targetFile = open(target, 'r')
+    tell('Removal complete.')
+    tell( target + ' after changes:\n' + targetFile.read() )
+
+
+## -----------------------------------------------------------------------------
+## MAIN
+## -----------------------------------------------------------------------------
+
+parser = OptionParser(usage = usage)
+parser.add_option('-v', '--verbose', action = 'store_true', dest = 'verbose', default = False, help = 'Verbose')
+parser.add_option('-r', '--remove', action = 'store_true', dest = 'remove',  default = False, help = 'Remove OSP configuration from ' + target)
+
+(options, args) = parser.parse_args()
+
+verbose = options.verbose
+
+if options.remove: uninstall()
+else: install()
