@@ -36,5 +36,6 @@ Enter the Open Source Pipeline.
 
 #Installing
 
-The Open Source Pipeline will need to have a home on a central location in a facility, something that's available to all the machines in the pipeline. Put the "osp" directory in this location and add the OSP magic to your /etc/bashrc or user-level .bashrc file. (I should probably build a script to do this.)
+The Open Source Pipeline will need to have a home on a central location, called OSP_HOME. This will probably be a network share or something similar, something that's available to all the machines in the facility. 
 
+Once the OSP files are placed in this central location, run the install script (osp/core/ospinstall) on each machine that will be "OSP-aware." This script will modify /etc/bashrc in order to source the OSP environment from our central location. This is the only bit of configuration that lives locally on a workstation (see goal #1, "minimal configuration on the workstation," above.) All other configuration will be done facility-wide from OSP_HOME.
