@@ -22,20 +22,23 @@ verbose = False
 # non-interactive shells as well for interactive ones.
 # http://www.joshstaiger.org/archives/2005/07/bash_profile_vs.html
 target='/etc/bashrc'
+thisFile = os.path.sep.join(os.path.abspath(__file__).split(os.path.sep)[:-3])
 
 delimiter = '## OSP configuration block'
 start = delimiter + ' start'
 end = delimiter + ' end'
 
 # This is the block of code that gets appended to the target file.
-ospConfigBlock = start + """
+ospConfigBlock = """
+%s
 export OSP_HOME=%s
-if [ -e \$OSP_HOME ]; then
-    . \$OSP_HOME/core/ospenv/osp-env.sh
+if [ -e $OSP_HOME ]; then
+    . $OSP_HOME/core/ospenv/osp-env.sh
 else
     unset OSP_HOME
 fi
-""" + end + '\n'
+%s
+""" % (start, thisFile, end)
 
 usage = """ospinstall [options]
 
