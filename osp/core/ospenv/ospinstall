@@ -32,10 +32,12 @@ end = delimiter + ' end'
 ospConfigBlock = """
 %s
 export OSP_HOME=%s
-if [ -e $OSP_HOME ]; then
-    . $OSP_HOME/core/ospenv/osp_env.sh
+export OSP_ENV=$OSP_HOME/core/ospenv/osp_env.sh
+if [ -e $OSP_ENV ]; then
+    . $OSP_ENV
 else
     unset OSP_HOME
+    unset OSP_ENV
 fi
 %s
 """ % (start, thisFile, end)
