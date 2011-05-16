@@ -33,7 +33,7 @@ ospConfigBlock = """
 %s
 export OSP_HOME=%s
 if [ -e $OSP_HOME ]; then
-    . $OSP_HOME/core/ospenv/osp-env.sh
+    . $OSP_HOME/core/ospenv/osp_env.sh
 else
     unset OSP_HOME
 fi
