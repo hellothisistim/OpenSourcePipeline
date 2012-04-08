@@ -11,6 +11,13 @@ So you need a little bit of organization and you need a little bit of glue-ware.
 
 Enter the Open Source Pipeline.
 
+##Current status: Broken
+Dammit. I was playing a little too fast and loose by having Python scripts print commands for BASH to execute. It was a tricky solution and it worked... for a little while. But not any more. So I'm trying to figure out another approach.
+
+I'm also wondering if a set of scripts called Open Source Pipeline should limit users to using BASH. Wouldn't it me nice to use the shell of your choice? Or maybe we should embrace the 21st century and get rid of shells entirely! What if OSP was written entirely in Python? How's that for bleeding-edge?
+
+So, yeah... watch this space. I'm still thinking about OSP. You may have noticed updates are pretty rare. I blame trying to balance time with my loved ones, my job in the VFX industry, and my interest in opening the pipeline. There's only enough time for two of those at the moment. Hopefully that'll change in the future.
+
 ##Goals:
 + Minimal configuration on the workstation
 + Understand that artists want to deal with as little "technical stuff" as possible. 
