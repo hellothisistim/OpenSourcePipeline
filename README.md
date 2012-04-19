@@ -1,7 +1,5 @@
 #Open Source Pipeline
 
-Python + Bash + Nuke + Shotgun + ?
-
 ##Mission: 
 It's the twenty-first century, folks! If you're working in the VFX industry, there's a good chance you're not working at ILM, DD, Weta or any other shop that's been around for ages and has lots of developers working on their big, well developed pipeline. In fact, it's very likely that you're part of a small team leveraging the current peak of capability found in commodity hardware and the wealth of non-proprietary VFX software to create your own world. And why wouldn't you? 
 
@@ -11,12 +9,10 @@ So you need a little bit of organization and you need a little bit of glue-ware.
 
 Enter the Open Source Pipeline.
 
-##Current status: Broken
-Dammit. I was playing a little too fast and loose by having Python scripts print commands for BASH to execute. It was a tricky solution and it worked... for a little while. But not any more. So I'm trying to figure out another approach.
+##Current status: Foundation work
+I have the base framework sketched out as Python objects. Now it's time to plan how these objects relate to the real world (or, less dramatically, the filesystem and/or the production database.)
 
-I'm also wondering if a set of scripts called Open Source Pipeline should limit users to using BASH. Wouldn't it me nice to use the shell of your choice? Or maybe we should embrace the 21st century and get rid of shells entirely! What if OSP was written entirely in Python? How's that for bleeding-edge?
-
-So, yeah... watch this space. I'm still thinking about OSP. You may have noticed updates are pretty rare. I blame trying to balance time with my loved ones, my job in the VFX industry, and my interest in opening the pipeline. There's only enough time for two of those at the moment. Hopefully that'll change in the future.
+Special thanks goes out to Mateusz Wójt for getting in touch about why OSP wasn't working. I had left OSP in a totally broken state for nearly a year -- not good! That spurred some re-thinking and this new approach. 
 
 ##Goals:
 + Minimal configuration on the workstation
