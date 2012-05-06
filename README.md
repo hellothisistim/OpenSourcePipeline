@@ -9,36 +9,36 @@ So you need a little bit of organization and you need a little bit of glue-ware.
 
 Enter the Open Source Pipeline.
 
-##Current status: Foundation work
-I have the base framework sketched out as Python objects. Now it's time to plan how these objects relate to the real world (or, less dramatically, the filesystem and/or the production database.)
+##Current status: Redesign
+OSP ran into a dead-end trying to be too tricky and too reliant on BASH, so I'm in the midst of a redesign. This requires that I do some learning and question some of my basic assumptions, too. Frankly, that's the whole point of this little project anyway. Expect the goals and approach to evolve as I make progress. So far, I have the base framework sketched out as Python objects. Now it's time to plan how these objects relate to each-other and to the real world (or, less dramatically, the filesystem and/or the production database.) 
 
 Special thanks goes out to Mateusz Wójt for getting in touch about why OSP wasn't working. I had left OSP in a totally broken state for nearly a year -- not good! That spurred some re-thinking and this new approach. 
 
 ##Goals:
 + Minimal configuration on the workstation
-+ Understand that artists want to deal with as little "technical stuff" as possible. 
++ Understand that artists want to deal with as little "technical stuff" as possible.
 + Structure the environment so that it's flexible and expandable (multiple shows, variable naming-standards, changing storage).
-+ Utilize Shotgun as a central "brain" that knows where everything lives on the filesystem. 
++ Be flexible about what database (if any) will be used. (I do truly love Shotgun, but some people may not need or want to be tied to it. Some studios may not even need a database at all.)
 + Facilitate "breaking off" a chunk of work to outside vendors and bringing their output back into the pipe. 
 + Allow customization by overloading OSP standard components with local studio-custom code. 
 
-##Approach: 
+##Approach:
++ Use Python objects to represent the logical structure at a facility, for it's resources and  it's projects.
++ Provide interfaces from that logical structure to the actual tools used. (Shells or a GUI, filesystem(s), database, renderfarm)
 + Use the idea from Unix of simple, single-function tools, piped together to create something useful and complex.
-+ Rely on [Shotgun](http://www.shotgunsoftware.com/) for the production database.
++ Artists' jobs are hard enough. If you make it easy for them to do the "right thing," they will. If it's complicated, they won't. Let's make it easy so we can all have a nicer time.
 
-##Components in progress:
+##Components (no longer) in progress (due to the redesign):
 + ospenv : A studio-wide command-line environment and framework for job-specific customizations. This is the base framework that OSP will run on. 
 + show.sh : Allows the user to further set up the environment for a show, sequence and shot.
 
 ##Future components:
 + Daily system
 + Site/Show/Shot magic for Nuke. Knobs in root which get evaluated + updated, all pathnames in script get expression-linked to the root knobs for single-point "correctability."
-+ Checking  tool for logging sources in SG.
-+ Log all sources in a Nuke script into Shotgun as an element and link them to the SG Version.
++ A publishing system to "nail down" files and avoid unexpected changes downstream.
 + A "package up these files and send them to a vendor" tool.
 
-#Installing
+Things that are specifically related to Shotgun:
++ Check-in tool for logging sources in SG.
++ Log all sources in a Nuke script into Shotgun as an element and link them to the SG Version.
 
-The Open Source Pipeline will need to have a home on a central location, called OSP_HOME. This will probably be a network share or something similar, something that's available to all the machines in the facility. 
-
-Once the OSP files are placed in this central location, run the install script (osp/core/ospinstall) on each machine that will be "OSP-aware." This script will modify /etc/bashrc in order to source the OSP environment from our central location. This is the only bit of configuration that lives locally on a workstation (see goal #1, "minimal configuration on the workstation," above.) All other configuration will be done facility-wide from OSP_HOME.
