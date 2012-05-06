@@ -12,6 +12,9 @@ Enter the Open Source Pipeline.
 ##Current status: Redesign
 OSP ran into a dead-end trying to be too tricky and too reliant on BASH, so I'm in the midst of a redesign. This requires that I do some learning and question some of my basic assumptions, too. Frankly, that's the whole point of this little project anyway. Expect the goals and approach to evolve as I make progress. So far, I have the base framework sketched out as Python objects. Now it's time to plan how these objects relate to each-other and to the real world (or, less dramatically, the filesystem and/or the production database.) 
 
+TODO:
+1. Now that we're not tied to a shell any more, the installation process will need to put a path configuration file into sys.prefix to make OSP a part of Python on the local machine. [http://docs.python.org/library/site.html](http://docs.python.org/library/site.html) 
+
 Special thanks goes out to Mateusz Wójt for getting in touch about why OSP wasn't working. I had left OSP in a totally broken state for nearly a year -- not good! That spurred some re-thinking and this new approach. 
 
 ##Goals:
