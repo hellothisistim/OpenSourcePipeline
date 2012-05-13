@@ -12,6 +12,8 @@ else:
 # For later...
 #import task 
 
+# TODO: Find a proper format for version info. major/minor/reallyminor? Is there a standard?
+version = ( 0, 0, 1, 'alpha')
 
 """
 Here's how I'd like stuff to work.
