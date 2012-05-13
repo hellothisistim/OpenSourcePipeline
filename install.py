@@ -13,33 +13,34 @@ local system, allowing the osp module to be imported in Python.
 """
 
 # From Python
-#import datetime
-import os.path
-#import shutil
-#import sys
-import site
 import logging
+import os
+import site
 from optparse import OptionParser
 
 ## -----------------------------------------------------------------------------
 ## GLOBALS
 ## -----------------------------------------------------------------------------
 
-#verbose = False
 path_config_filename = 'osp.pth'
 
-#Set up logging
-log = logging.getLogger(__file__)
-log.setLevel(level=logging.DEBUG)
 
-# If we find one, add osp.pth to that directory.
+#Set up logging
+logging.basicConfig()
+#log = logging.getLogger(__file__)
+log = logging.getLogger()
+log.setLevel(level=logging.DEBUG) # Should be INFO 
+# TODO: Logging info should be saved to a install.log file. 
+# But where? In the same directory as install.py? In ~? ~/.osp?
+
 
 ## -----------------------------------------------------------------------------
 ## METHODS
 ## -----------------------------------------------------------------------------
 
-def findInstallLocation():
-    """Search the list of all the possible locations for site-packages for one that actually exists. Return the first one found.
+def find_install_location():
+    """
+    Search the list of all the possible locations for site-packages for one that actually exists. Return the first one found.
     """
 
     pkgs = site.getsitepackages()
@@ -51,9 +52,12 @@ def findInstallLocation():
     raise Exception("No site-packages directory found on this system. Tried these locations and none exist: %s" % ", ".join(pkgs))
 
 def install(location):
-    """Replace any existing osp.pth file in the install location with a new one.
+    """
+    Replace any existing osp.pth file in the install location with a new one.
     """
     
+    # TODO: Should probably remove any existing osp.pth files from _any_ 
+    # site-packages dirs in site.getsitepackages()
     log.debug('Starting installation to %s' % location)
     # Assume this script is in the root of the OSP install.
     osp_dir = os.path.dirname(os.path.abspath(__file__))
@@ -67,7 +71,19 @@ def install(location):
     log.debug('Installation finished.')
     
 def remove():
-    pass
+    """
+    ** Not yet implemented! **
+    Remove any existing osp.pth file from any path in site.getsitepackages().
+    """
+    
+    log.debug('Starting removal.')    
+    for directory in site.getsitepackages():
+        path_file = os.path.join(directory, path_config_filename)
+        if os.path.exists(path_file):
+            log.debug('Removing %s' % path_file)
+            os.remove(path_file)
+    log.debug("Removal finished.")
+            
     
 ## -----------------------------------------------------------------------------
 ## MAIN
@@ -79,16 +95,18 @@ if __name__ == '__main__':
     
     Install Open Source Pipeline (OSP) on this computer. 
     
-    Enables OSP by adding a path configuration file ("osp.pth") containing the path to the Open Source Pipeline module.
-    """)
+    Enables OSP on the local machine by adding a path configuration file 
+    ("osp.pth") to Python's site-packages directory.""")
     parser.add_option('-v', '--verbose', action = 'store_true', dest = 'verbose', 
                       default = False, help = 'Verbose')
     parser.add_option('-r', '--remove', action = 'store_true', dest = 'remove',  
                       default = False, help = 'Remove OSP configuration')
     
     (options, args) = parser.parse_args()
+    if options.verbose:
+        log.setLevel(level=logging.DEBUG)
     
-    verbose = options.verbose
-    
-    if options.remove: uninstall()
-    else: install()
+    if options.remove: 
+        remove()
+    else: 
+        install(find_install_location())
