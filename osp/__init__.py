@@ -9,6 +9,15 @@ else:
     import core
 
 
+<<<<<<< HEAD
+=======
+# For later...
+#import task 
+
+# TODO: Find a proper format for version info. major/minor/reallyminor? Is there a standard?
+version = ( 0, 0, 1, 'alpha')
+
+>>>>>>> 5f1c83c8344fd63f3acf35a848706b186beac3d0
 """
 Here's how I'd like stuff to work.
 
