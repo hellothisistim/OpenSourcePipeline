@@ -26,7 +26,8 @@ path_config_filename = 'osp.pth'
 
 
 #Set up logging
-logging.basicConfig()
+LOG_FILENAME = os.path.expanduser(__file__)
+logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 #log = logging.getLogger(__file__)
 log = logging.getLogger()
 log.setLevel(level=logging.DEBUG) # Should be INFO 
@@ -110,3 +111,7 @@ if __name__ == '__main__':
         remove()
     else: 
         install(find_install_location())
+DEBUG:root:Starting installation to /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
+DEBUG:root:OSP home is /Users/puffy/code/OpenSourcePipeline
+DEBUG:root:Writing path configuration file to /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/osp.pth
+DEBUG:root:Installation finished.
