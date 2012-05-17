@@ -24,35 +24,53 @@ jobConfigFileName = 'osp_show_config.json'
 ##
 
 class Environement(object):
-    """We'll be setting the whats and wherefores for the OSP job environment here. With any luck, we'll be able to pickle these and then pass them around. And also pass them to the shell-specific scripts so the environment can be set in whatever shell we like... bash or zsh or maybe even DOS!
-    """
+    """We'll be setting the whats and wherefores for the OSP job 
+    environment here. With any luck, we'll be able to pickle these and 
+    then pass them around. And also pass them to the shell-specific 
+    scripts so the environment can be set in whatever shell we 
+    like... bash or zsh or maybe even DOS!
 
+    """
+    
     def __init__(self):
+        # find OSP-enabled volumes
+        self.volumes = Volumes()
+        # look for local studio configs
+        
+        # set up aliases for applications
         pass
+    
+    
         
 
 class Job(object):
-    """Represents a job (a.k.a. show, commercial, project, film, etc.) in OSP."""
+    """Represents a job (a.k.a. show, commercial, project, film, etc.) 
+    in OSP.
     
-    meta = { 'OSP_JOB_PATH':u'Job Path',
+    """
+    
+    """
+    self.meta = { 'OSP_JOB_PATH':u'Job Path',
              'OSP_JOB_CODE':u'Job Code',
              'OSP_JOB_NAME':u'Job Name',
              }
+    """
                
     def __init__(self, code, fullName=None):
-        self.code = code
-        self.fullName = fullName
-        self.sequences = self._loadSequences()
+        self.code = code # Job code name
+        self.fullName = fullName # Job's full name
+        self.sequences = list()
         
-    def __repr__(self):
-        reprString = u"Job: " + self.code
-        if self.fullName is not None:
-            reprString += u', ' + self.fullName
-        return reprString
-        
-    def _loadSequences(self):
-        sequences = []
-        return sequences
+    #def __repr__(self):
+    #    reprString = u"Job: " + self['code']
+    #    if self['fullName'] is not None:
+    #        reprString += u', ' + self['fullName']
+    #    return reprString
+    
+    ## Loading all the sequences in a job isn't so easy -- where do we load it from? Filesystem? Database?
+    #def _loadSequences(self):
+    #    sequences = []
+    #    return sequences
 
 
 class Sequence(object):
@@ -90,6 +108,11 @@ class Shot(object):
             reprString += u', ' + self.fullName
         return reprString
 
+
+# TODO: Maybe make a Task class?
+class Task(object):
+    pass
+
         
 class Volumes(list):
     """Storage volume auto-detection for OSP-enabled volumes. 
@@ -107,7 +130,8 @@ class Volumes(list):
     """
 
     def __init__(self):    
-        """Find the OSP-enabled volumes from the volumes mounted on this machine."""
+        """Find the OSP-enabled volumes from the volumes mounted on 
+        this machine."""
         
         for drive in self._mountedVolumes():
             ospToken = os.path.join(drive, ospVolumeTokenName)
