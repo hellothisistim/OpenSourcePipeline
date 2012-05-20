@@ -8,16 +8,13 @@ if 'osp.core' in sys.modules:
 else:
     import core
 
-
-<<<<<<< HEAD
-=======
 # For later...
-#import task 
+#import task
 
-# TODO: Find a proper format for version info. major/minor/reallyminor? Is there a standard?
-version = ( 0, 0, 1, 'alpha')
+# TODO: Find a proper format for version info. major/minor/reallyminor?
+# Is there a standard?
+version = (0, 0, 1, 'alpha')
 
->>>>>>> 5f1c83c8344fd63f3acf35a848706b186beac3d0
 """
 Here's how I'd like stuff to work.
 
@@ -32,7 +29,7 @@ osp.Environment()
 
 osp.Volumes()
     load() -- find all osp-enabled volumes on this machine
-    
+
 osp.Volume()
     path
     name
@@ -87,35 +84,37 @@ osp_vols = os.getenv('OSP_VOLS')
 
 def volumes():
     "    Return a list of all OSP-enableled volumes available on this machine."
-    
+
     return [vol for vol in osp_vols.split(':') if os.path.exists(vol)]
 
 def job_dirs():
     "
-    Return a list of the paths to all jobs folders on all the OSP-enableled volumes available on this machine.
+    Return a list of the paths to all jobs folders on all the OSP-enableled
+    volumes available on this machine.
     "
-    
+
     dirs = [os.path.join(vol, job_folder_name) for vol in volumes()]
-    return [dir for dir in dirs if os.path.exists(dir)]    
-    
+    return [dir for dir in dirs if os.path.exists(dir)]
+
 
 def jobs():
     "
-    Return a list of the paths to all OSP-enableled jobs available on this machine.
+    Return a list of the paths to all OSP-enableled jobs available on this
+    machine.
     "
-    
+
     joblist = []
     for jobd in job_dirs():
         joblist += [os.path.join(jobd, d) for d in os.listdir(jobd)]
     return [job for job in joblist if os.path.exists(job_config_file(job))]
-        
-    
+
+
 def job_config_file(job_path):
     "
     Accept the path to a job's root directory and return the path to that job's
     config file (whether or not it exists.)
     "
-    
+
     return os.path.join(job_path, job_osp_folder_name, job_config_file_name)
 
 def job_env(which=None):
@@ -124,10 +123,10 @@ def job_env(which=None):
     job-related OSP evironment variables. If which is provided, filter out the
     variable names that don't conatain the value of which.
     "
-    
+
     out = {}
     for var in job_envars:
-        if which and which not in var: continue 
+        if which and which not in var: continue
         if os.getenv(var) is not None: out[var] = os.getenv(var)
     return out
 
@@ -135,6 +134,6 @@ def job_env(which=None):
 
 if __name__ == "__main__":
     pass
-    
-    
+
+
 """
