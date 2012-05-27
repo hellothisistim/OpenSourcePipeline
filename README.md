@@ -12,9 +12,6 @@ Enter the Open Source Pipeline.
 ##Current status: Redesign
 OSP ran into a dead-end trying to be too tricky and too reliant on BASH, so I'm in the midst of a redesign. This requires that I do some learning and question some of my basic assumptions, too. Frankly, that's the whole point of this little project anyway. Expect the goals and approach to evolve as I make progress. So far, I have the base framework sketched out as Python objects. Now it's time to plan how these objects relate to each-other and to the real world (or, less dramatically, the filesystem and/or the production database.) 
 
-TODO:
-1. Now that we're not tied to a shell any more, the installation process will need to put a path configuration file into sys.prefix to make OSP a part of Python on the local machine. [http://docs.python.org/library/site.html](http://docs.python.org/library/site.html) 
-
 Special thanks goes out to Mateusz Wójt for getting in touch about why OSP wasn't working. I had left OSP in a totally broken state for nearly a year -- not good! That spurred some re-thinking and this new approach. 
 
 ##Goals:
@@ -29,7 +26,7 @@ Special thanks goes out to Mateusz Wójt for getting in touch about why OSP wasn
 + Use Python objects to represent the logical structure at a facility, for it's resources and  it's projects.
 + Provide interfaces from that logical structure to the actual tools used. (Shells or a GUI, filesystem(s), database, renderfarm)
 + Use the idea from Unix of simple, single-function tools, piped together to create something useful and complex.
-+ Artists' jobs are hard enough. If you make it easy for them to do the "right thing," they will. If it's complicated, they won't. Let's make it easy so we can all have a nicer time.
++ Artists' jobs are hard enough. If you make it easy for them to do the "right thing," they will. If it's complicated, they won't. Let's make it easy so we can all have a nicer time. We can do this by chosing intelligent defaults and by integrating OSP into applications in a way that's consistent with that application's workflow.
 
 ##Components (no longer) in progress (due to the redesign):
 + ospenv : A studio-wide command-line environment and framework for job-specific customizations. This is the base framework that OSP will run on. 
