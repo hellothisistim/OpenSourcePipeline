@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/local/bin/python
 #
 # install
 #
@@ -16,6 +16,7 @@ local system, allowing the osp module to be imported in Python.
 import logging
 import os
 import site
+import sys
 from optparse import OptionParser
 
 ## ---------------------------------------------------------------------
@@ -29,7 +30,7 @@ path_config_filename = 'osp.pth'
 logging.basicConfig()
 #log = logging.getLogger(__file__)
 log = logging.getLogger()
-log.setLevel(level=logging.DEBUG)  # Should be INFO
+log.setLevel(level=logging.INFO)
 # TODO: Logging info should be saved to a install.log file.
 # But where? In the same directory as install.py? In ~? ~/.osp?
 
@@ -41,7 +42,8 @@ log.setLevel(level=logging.DEBUG)  # Should be INFO
 def find_install_location():
     """
     Search the list of all the possible locations for site-packages for
-    one that actually exists. Return the first one found.
+    one that actually exists on the local machine. Return the first one 
+    found.
     """
 
     pkgs = site.getsitepackages()
@@ -80,7 +82,7 @@ def remove():
     Remove any existing osp.pth file from any path in site.getsitepackages().
     """
 
-    log.debug('Starting removal.')
+    log.debug('Starting removal.')    
     for directory in site.getsitepackages():
         path_file = os.path.join(directory, path_config_filename)
         if os.path.exists(path_file):
@@ -100,7 +102,8 @@ if __name__ == '__main__':
     Install Open Source Pipeline (OSP) on this computer.
 
     Enables OSP on the local machine by adding a path configuration file
-    ("osp.pth") to Python's site-packages directory.""")
+    ("osp.pth") to Python's site-packages directory. Requires Python 2.7 
+    or later.""")
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose',
                       default=False, help='Verbose')
     parser.add_option('-r', '--remove', action='store_true', dest='remove',
@@ -110,6 +113,12 @@ if __name__ == '__main__':
     if options.verbose:
         log.setLevel(level=logging.DEBUG)
 
+    # Are we in Python 2.7 or later?
+    log.debug('Running in Python version: %s' % sys.version)
+    py_major, py_minor = sys.version_info[0:2]
+    if py_major < 2 or py_minor < 7:
+        sys.exit('Error: OSP must be installed using Python 2.7 or later.')
+    
     if options.remove:
         remove()
     else:
