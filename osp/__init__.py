@@ -12,7 +12,7 @@ else:
 #import task
 
 # TODO: Find a proper format for version info. major/minor/reallyminor?
-# Is there a standard?
+# Is there a standard? Might want to emulate sys.version_info.
 version = (0, 0, 1, 'alpha')
 
 """

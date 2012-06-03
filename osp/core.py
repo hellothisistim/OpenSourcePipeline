@@ -3,7 +3,11 @@
 #
 # Tim BOWMAN [puffy@netherlogic.com]
 #
-
+"""
+With OSP, we're trying not to be tied to a shell or a specific GUI. In 
+osp.core we're building objects that we can pass around instead of handing 
+around command-line options. 
+"""
 
 import json
 import os
@@ -21,22 +25,38 @@ jobConfigFileName = 'osp_show_config.json'
 ## Classes
 ## ---------------------------------------------------------------------
 
-class Environement(object):
+
+# TODO: This should be moved into it's own module. 
+# osp.env.Environment()
+#
+class Environment(list):
     """We'll be setting the whats and wherefores for the OSP job
     environment here. With any luck, we'll be able to pickle these and
     then pass them around. And also pass them to the shell-specific
     scripts so the environment can be set in whatever shell we
     like... bash or zsh or maybe even DOS!
+    
+    A container object for all the other classes in osp.core. An OSP 
+    environment can consist of any combination of these objects.
+    
     """
-
-    def __init__(self):
-        # find OSP-enabled volumes
-        self.volumes = Volumes()
-        # look for local studio configs
-        pass
-        # set up aliases for applications
-        pass
-
+    
+    def __init__(self, setup=(None,)):
+        """
+        Optionally takes a list of osp.core objects for initial setup.
+        Otherwise will create an empty environment.
+        
+        """
+        import osp.core
+        core_names = dir(osp.core)
+        print core_names
+        for item in setup:
+            item_name = type(item)
+            print "item_name", item_name, "type(item_name):", type(item_name)
+            if type(item) in core_names:
+                self.append(item)
+                print "appended", item
+        
 
 class Job(object):
     """Represents a job (a.k.a. show, commercial, project, film, etc.)
@@ -53,17 +73,19 @@ class Job(object):
 
     def __init__(self, code, fullName=None):
         self.code = code  # Job code name
-        self.fullName = fullName  # Job's full name
-        self.sequences = list()
+        self.full_name = fullName  # Job's full name
 
-    #def __repr__(self):
-    #    reprString = u"Job: " + self['code']
-    #    if self['fullName'] is not None:
-    #        reprString += u', ' + self['fullName']
-    #    return reprString
-    #
+    def __repr__(self):
+        reprString = u"Job: " + self.code
+        if self.full_name is not None:
+            reprString += u', ' + self.full_name
+        return reprString
+    
     ## Loading all the sequences in a job isn't so easy -- where do we
     ## load it from? Filesystem? Database?
+    #
+    # We do'nt load it here. We collect all of that in an Environemnt
+    #
     #def _loadSequences(self):
     #    sequences = []
     #    return sequences
@@ -196,3 +218,40 @@ class Volume(object):
 
     def __repr__(self):
         return u'Volume: ' + self.name + u': ' + self.path
+
+
+# TODO: Once we've set up the environment, we'll build objects like this 
+# to hand around. It'll be awesome.
+class Image(object):
+    """
+    Yup, it's a picture. It has height & width, type and a filepath.
+    """
+    
+    pass
+
+class ImageSequence(object):
+    pass
+    
+class Mesh(object):
+    """
+    A 3D mesh. Should probably investigate Alembic before we implement 
+    this. No sense duplicating effort. There may be something useful there.
+    """
+    
+class ApplicationVersion(object):
+    """
+    Represents a specific version of an application.
+    (For example, Nuke version6.3v6)
+    
+    """
+    
+    pass
+    
+
+if __name__ == "__main__":
+    
+    job = Job('test')
+    seq = Sequence('sample')
+    env = Environment((job, seq))
+    print env
+    
