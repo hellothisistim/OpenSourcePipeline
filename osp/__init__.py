@@ -33,7 +33,7 @@ version = (0, 0, 1, 'alpha')
 
 ospVolumeTokenName = 'osp-volume.json'  # indicates an OSP-enabled volume.
 jobDirName = 'jobs'
-jobConfigFileName = 'osp_show_config.json'
+jobConfigFileName = 'osp_job_config.json'
 
 
 ## ---------------------------------------------------------------------

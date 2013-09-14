@@ -63,6 +63,7 @@ def install(location):
 
     # TODO: Should probably remove any existing osp.pth files from _any_
     # site-packages dirs in site.getsitepackages()
+    # TODO: We should be checking for Python 2.7 because this site-packages shenanigans won't work on anything earlier.
     log.debug('Starting installation to %s' % location)
     # Assume this script is in the root of the OSP install.
     osp_dir = os.path.dirname(os.path.abspath(__file__))

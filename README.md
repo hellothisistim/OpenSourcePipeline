@@ -1,7 +1,7 @@
 #Open Source Pipeline
 
 ##Mission: 
-It's the twenty-first century, folks! If you're working in the VFX industry, there's a good chance you're not working at ILM, DD, Weta or any other shop that's been around for ages and has lots of developers working on their big, well developed pipeline. In fact, it's very likely that you're part of a small team leveraging the current peak of capability found in commodity hardware and the wealth of non-proprietary VFX software to create your own world. And why wouldn't you? 
+It's the twenty-first century, folks! If you're working in the VFX industry, there's a good chance you're not working at ILM, DD, Weta or any other shop that's been around for ages and has lots of developers working on their big, well-funded pipeline. In fact, it's very likely that you're part of a small team leveraging the current peak of capability found in commodity hardware and the wealth of non-proprietary VFX software to create your own world. And why wouldn't you? 
 
 The problem you're probably running into -- just like every other small shop -- is that these commodity tools don't automatically slot into each-other by themselves. And moving information around by hand is definitely sub-optimal. You may have also teamed up with other small shops and need to be able to swap files around between yourselves.
 
@@ -24,9 +24,9 @@ Special thanks goes out to Mateusz Wójt for getting in touch about why OSP wasn
 
 ##Approach:
 + Use Python objects to represent the logical structure at a facility, for it's resources and  it's projects.
-+ Provide interfaces from that logical structure to the actual tools used. (Shells or a GUI, filesystem(s), database, renderfarm)
++ Provide interfaces from that logical structure to the actual tools used. (Shells or a GUI, DCC apps, filesystem(s), database, renderfarm)
 + Use the idea from Unix of simple, single-function tools, piped together to create something useful and complex.
-+ Artists' jobs are hard enough. If you make it easy for them to do the "right thing," they will. If it's complicated, they won't. Let's make it easy so we can all have a nicer time. We can do this by chosing intelligent defaults and by integrating OSP into applications in a way that's consistent with that application's workflow.
++ Artists' jobs are hard enough. If you make it easy for them to do the "right thing," they will. If it's complicated, they won't. Let's make it easy so we can all have a nicer time. We can do this by chosing intelligent defaults and by integrating OSP into DCC applications in a way that's consistent with the application's workflow.
 
 ##Components (no longer) in progress (due to the redesign):
 + ospenv : A studio-wide command-line environment and framework for job-specific customizations. This is the base framework that OSP will run on. 
