@@ -79,7 +79,6 @@ def install(location):
 
 def remove():
     """
-    ** Not yet implemented! **
     Remove any existing osp.pth file from any path in site.getsitepackages().
     """
 
