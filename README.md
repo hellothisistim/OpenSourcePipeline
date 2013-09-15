@@ -9,18 +9,21 @@ So you need a little bit of organization and you need a little bit of glue-ware.
 
 Enter the Open Source Pipeline.
 
-##Current status: Redesign
+##Current status: Redesign in progress
 OSP ran into a dead-end trying to be too tricky and too reliant on BASH, so I'm in the midst of a redesign. This requires that I do some learning and question some of my basic assumptions, too. Frankly, that's the whole point of this little project anyway. Expect the goals and approach to evolve as I make progress. So far, I have the base framework sketched out as Python objects. Now it's time to plan how these objects relate to each-other and to the real world (or, less dramatically, the filesystem and/or the production database.) 
 
 Special thanks goes out to Mateusz Wójt for getting in touch about why OSP wasn't working. I had left OSP in a totally broken state for nearly a year -- not good! That spurred some re-thinking and this new approach. 
 
 ##Goals:
-+ Minimal configuration on the workstation
 + Understand that artists want to deal with as little "technical stuff" as possible.
++ Minimal configuration on the workstation.
+    + Require Python 2.7
+    + Insert a path to OSP in site-packages.
 + Structure the environment so that it's flexible and expandable (multiple shows, variable naming-standards, changing storage).
++ Allow customization.
+    + Facilitate overloading OSP standard components with local studio-custom code. 
 + Be flexible about what database (if any) will be used. (I do truly love Shotgun, but some people may not need or want to be tied to it. Some studios may not even need a database at all.)
 + Facilitate "breaking off" a chunk of work to outside vendors and bringing their output back into the pipe. 
-+ Allow customization by overloading OSP standard components with local studio-custom code. 
 
 ##Approach:
 + Use Python objects to represent the logical structure at a facility, for it's resources and  it's projects.
@@ -38,7 +41,49 @@ Special thanks goes out to Mateusz Wójt for getting in touch about why OSP wasn
 + A publishing system to "nail down" files and avoid unexpected changes downstream.
 + A "package up these files and send them to a vendor" tool.
 
-Things that are specifically related to Shotgun:
+###Things that are specifically related to Shotgun:
 + Check-in tool for logging sources in SG.
 + Log all sources in a Nuke script into Shotgun as an element and link them to the SG Version.
+
+##Installing
+1. Prereqs: You'll need to be running Python 2.7.
+2. Grab the .zip from [GitHub](https://github.com/timbowman/OpenSourcePipeline).
+3. Unzip it and copy it to your centralized location for scripts at your studio. (For me, that's "/Volumes/OSP-Test-Disk/studio/scripts/".)
+4. In a terminal, switch to the directory where you just put OSP and run install.py.
+
+    $ cd /Volumes/OSP-Test-Disk/studio/scripts/OpenSourcePipeline-master
+    $ ./install.py
+
+5. Now you can start Python and import osp.
+    
+    $ python
+    Python 2.7.3 (v2.7.3:70274d53c1dd, Apr  9 2012, 20:32:06)
+    [GCC 4.0.1 (Apple Inc. build 5493)] on darwin
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import osp
+    >>>
+
+6. Now it's time to tell OSP where my files are stored.
+
+    >>> osp.Volumes().enable('MyFiler', '/Volumes/OSP-Test-Disk')
+
+This puts a JSON file (`osp-volume.json`)in the root of my test disk. OSP will look for a file like this one in the root of each mounted volume.
+
+    >>>exit()
+    $ cat /Volumes/OSP-Test-Disk/osp-volume.json
+    {
+        "name": "MyFiler",
+        "path": "/Volumes/OSP-Test-Disk"
+    }%                                                                            
+
+7. Now, back in Python, OSP knows where I store my data.
+
+    $ python
+    Python 2.7.3 (v2.7.3:70274d53c1dd, Apr  9 2012, 20:32:06)
+    [GCC 4.0.1 (Apple Inc. build 5493)] on darwin
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import osp
+    >>> osp.Volumes()
+    [Volume: MyFiler: /Volumes/OSP-Test-Disk]
+    >>>
 
