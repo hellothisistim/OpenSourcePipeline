@@ -46,37 +46,43 @@ Special thanks goes out to Mateusz Wójt for getting in touch about why OSP wasn
 + Log all sources in a Nuke script into Shotgun as an element and link them to the SG Version.
 
 ##Installing
-1. Prereqs: You'll need to be running Python 2.7.
-2. Grab the .zip from [GitHub](https://github.com/timbowman/OpenSourcePipeline).
-3. Unzip it and copy it to your centralized location for scripts at your studio. (For me, that's "/Volumes/OSP-Test-Disk/studio/scripts/".)
-4. In a terminal, switch to the directory where you just put OSP and run install.py.
+Prereqs: You'll need to be running Python 2.7.
+
+Grab the .zip from [GitHub](https://github.com/timbowman/OpenSourcePipeline).
+
+Unzip it and copy it to your centralized location for scripts at your studio. (For me, that's `/Volumes/OSP-Test-Disk/studio/scripts/`.)
+
+In a terminal, switch to the directory where you just put OSP and run install.py.
 
     $ cd /Volumes/OSP-Test-Disk/studio/scripts/OpenSourcePipeline-master
     $ ./install.py
 
-5. Now you can start Python and import osp.
+Now you can start Python and import osp.
     
+    ...
     $ python
     Python 2.7.3 (v2.7.3:70274d53c1dd, Apr  9 2012, 20:32:06)
     [GCC 4.0.1 (Apple Inc. build 5493)] on darwin
     Type "help", "copyright", "credits" or "license" for more information.
     \>\>\> import osp
     \>\>\>
+    ...
 
-6. Now it's time to tell OSP where my files are stored.
+Now it's time to tell OSP where my files are stored.
 
     \>\>\> osp.Volumes().enable('MyFiler', '/Volumes/OSP-Test-Disk')
+    
 
-7. This puts a JSON file `osp-volume.json` in the root of my test disk. OSP will look for a file like this one in the root of each mounted volume.
+This puts a JSON file `osp-volume.json` in the root of my test disk. OSP will look for a file like this one in the root of each mounted volume.
 
     \>\>\>exit()
     $ cat /Volumes/OSP-Test-Disk/osp-volume.json
     {
         "name": "MyFiler",
         "path": "/Volumes/OSP-Test-Disk"
-    }%                                                                            
+    }%
 
-8. Now, back in Python, OSP knows where I store my data.
+Now, back in Python, OSP knows where I store my data.
 
     $ python
     Python 2.7.3 (v2.7.3:70274d53c1dd, Apr  9 2012, 20:32:06)
