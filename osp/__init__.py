@@ -15,10 +15,10 @@ import os
 import json
 
 
-if 'osp.core' in sys.modules:
-    reload(core)
-else:
-    import core
+# if 'osp.core' in sys.modules:
+#     reload(core)
+# else:
+#     import core
 if 'osp.env' in sys.modules:
     reload(env)
 else:
@@ -49,22 +49,22 @@ class BaseShowSection(object):
     def __init__(self, path_component, name):
         assert type(path_component) == str
         assert type(name) == unicode
-        self.path_component = path_component  # used for the filesystem(s)
-        self.name = name  # Full name
-        self.osp_version = version
-        self.created = datetime.datetime.utcnow()
+        self._path_component = path_component  # used for the filesystem(s)
+        self._name = name  # Full name
+        self._osp_version = version
+        self._created = datetime.datetime.utcnow()
 
     def __repr__(self):
-        reprString = u"Show: " + self.path_component
-        if self.name is not None:
-            reprString += u', ' + self.name
+        reprString = u"Show: " + self._path_component
+        if self.name() is not None:
+            reprString += u', ' + self.name()
         return reprString
 
     def path_component(self):
-        return self.path_component
+        return self._path_component
         
     def name(self):
-        return self.name
+        return self._name
     
 
 class Show(BaseShowSection):
@@ -128,7 +128,6 @@ class Volumes(list):
         for drive in self._mountedVolumes():
             ospToken = os.path.join(drive, ospVolumeTokenName)
             if os.path.exists(ospToken):
-                import json
                 # Load the JSON
                 thisVolume = json.load(file(ospToken))
                 self.append(Volume(thisVolume[u'name'], thisVolume[u'path']))
