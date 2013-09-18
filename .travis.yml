@@ -2,7 +2,7 @@ language: python
 python:
   - "2.7"
 # command to install dependencies
-script: python test/tests.py
+script: python osp/test/tests.py
 branches:
   only:
     - master
