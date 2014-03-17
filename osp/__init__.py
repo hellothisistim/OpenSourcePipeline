@@ -303,8 +303,18 @@ class Environment(object):
 
 
 
+def shows():
+    """
+    Return a list of all the shows available on local OSP-enabled volumes.
 
+    """
 
+    shows = []
+    for volume in Volumes():
+        for show in os.listdir(volume.path):
+            shows.append(show)
+
+    return shows
 
 
 
