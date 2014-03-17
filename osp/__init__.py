@@ -311,8 +311,11 @@ def shows():
 
     shows = []
     for volume in Volumes():
-        for show in os.listdir(volume.path):
-            shows.append(show)
+        path = os.path.join(volume.path, 'jobs')
+        for show in os.listdir(path):
+            show_path = os.path.join(path, show)
+            #TODO: Oh, awesome, string/unicode conflicts already. 
+            shows.append(Show(show_path, show))
 
     return shows
 
