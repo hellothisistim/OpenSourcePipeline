@@ -57,27 +57,26 @@ Unzip it and copy it to your centralized location for scripts at your studio. (F
 In a terminal, switch to the directory where you just put OSP and run install.py.
 
     $ cd /Volumes/OSP-Test-Disk/studio/scripts/OpenSourcePipeline-master
-    $ ./install.py
+    $ sudo python install.py
 
 Now you can start Python and import osp.
     
-    ...
+
     $ python
     Python 2.7.3 (v2.7.3:70274d53c1dd, Apr  9 2012, 20:32:06)
     [GCC 4.0.1 (Apple Inc. build 5493)] on darwin
     Type "help", "copyright", "credits" or "license" for more information.
-    \>\>\> import osp
-    \>\>\>
-    ...
+    >>> import osp
+    >>>
 
 Now it's time to tell OSP where my files are stored.
 
-    \>\>\> osp.Volumes().enable('MyFiler', '/Volumes/OSP-Test-Disk')
+    >>> osp.Volumes().enable('MyFiler', '/Volumes/OSP-Test-Disk')
     
 
 This puts a JSON file `osp-volume.json` in the root of my test disk. OSP will look for a file like this one in the root of each mounted volume.
 
-    \>\>\>exit()
+    >>> exit()
     $ cat /Volumes/OSP-Test-Disk/osp-volume.json
     {
         "name": "MyFiler",
@@ -90,8 +89,8 @@ Now, back in Python, OSP knows where I store my data.
     Python 2.7.3 (v2.7.3:70274d53c1dd, Apr  9 2012, 20:32:06)
     [GCC 4.0.1 (Apple Inc. build 5493)] on darwin
     Type "help", "copyright", "credits" or "license" for more information.
-    \>\>\> import osp
-    \>\>\> osp.Volumes()
+    >>> import osp
+    >>> osp.Volumes()
     [Volume: MyFiler: /Volumes/OSP-Test-Disk]
-    \>\>\>
+    >>>
 
