@@ -28,9 +28,9 @@ Special thanks goes out to Mateusz Wójt for getting in touch about why OSP wasn
 + Facilitate "breaking off" a chunk of work to outside vendors and bringing their output back into the pipe. 
 
 ##Approach:
-+ Use Python objects to represent the logical structure at a facility, for it's resources and  it's projects.
++ Use Python objects to represent the logical structure at a facility, for its resources and  its projects.
 + Provide interfaces from that logical structure to the actual tools used. (Shells or a GUI, DCC apps, filesystem(s), database, renderfarm)
-+ Use the idea from Unix of simple, single-function tools, piped together to create something useful and complex.
++ Incpired by UNIX, create simple, single-function tools, which pipe together to create something useful and complex.
 + Artists' jobs are hard enough. If you make it easy for them to do the "right thing," they will. If it's complicated, they won't. Let's make it easy so we can all have a nicer time. We can do this by chosing intelligent defaults and by integrating OSP into DCC applications in a way that's consistent with the application's workflow.
 
 ##Components (no longer) in progress (due to the redesign):
